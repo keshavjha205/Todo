@@ -29,7 +29,7 @@ A simple and lightweight React-based Todo App with local storage support. Users 
 
 3. Start the development server:
    ```bash
-   npm start
+   npm run dev
    ```
 
 ## Usage
