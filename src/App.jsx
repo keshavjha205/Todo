@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { MdDelete } from "react-icons/md";
+import { MdDelete, MdEdit } from "react-icons/md";
 import "./index.css";
 
 function App() {
@@ -8,27 +8,40 @@ function App() {
     return savedTodo ? JSON.parse(savedTodo) : [];
   });
 
-  const [singleTodo, setSingleTodo] = useState({ title: "", desc: "" });
+  const [singleTodo, setSingleTodo] = useState({ title: "", desc: "", dueDate: "" });
+  const [editIndex, setEditIndex] = useState(null);
 
   useEffect(() => {
     localStorage.setItem("todo", JSON.stringify(allTodo));
   }, [allTodo]);
 
-  function addTodo() {
+  function addOrUpdateTodo() {
     if (!singleTodo.title.trim() || !singleTodo.desc.trim()) {
       return;
     }
-    setAllTodo((prevValue) => [...prevValue, singleTodo]);
-    setSingleTodo({ title: "", desc: "" });
+
+    if (editIndex !== null) {
+      setAllTodo((prev) => prev.map((todo, index) => (index === editIndex ? singleTodo : todo)));
+      setEditIndex(null);
+    } else {
+      setAllTodo((prev) => [...prev, singleTodo]);
+    }
+    
+    setSingleTodo({ title: "", desc: "", dueDate: "" });
   }
 
   function deleteTodo(index) {
-    setAllTodo((prevValue) => prevValue.filter((_, i) => i !== index));
+    setAllTodo((prev) => prev.filter((_, i) => i !== index));
+  }
+
+  function editTodo(index) {
+    setSingleTodo(allTodo[index]);
+    setEditIndex(index);
   }
 
   function handleKeyDown(e) {
     if (e.key === "Enter") {
-      addTodo();
+      addOrUpdateTodo();
     }
   }
 
@@ -62,11 +75,19 @@ function App() {
           onKeyDown={handleKeyDown}
           className="border border-gray-300 rounded-lg px-4 py-2 w-full focus:outline-none focus:ring-2 focus:ring-blue-500"
         />
+        <input
+          type="date"
+          value={singleTodo.dueDate}
+          onChange={(e) =>
+            setSingleTodo((prev) => ({ ...prev, dueDate: e.target.value }))
+          }
+          className="border border-gray-300 rounded-lg px-4 py-2 w-full focus:outline-none focus:ring-2 focus:ring-blue-500"
+        />
         <button
-          onClick={addTodo}
+          onClick={addOrUpdateTodo}
           className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-all"
         >
-          Add Todo
+          {editIndex !== null ? "Update Todo" : "Add Todo"}
         </button>
       </div>
 
@@ -78,12 +99,21 @@ function App() {
           >
             <h1 className="text-lg font-semibold text-gray-800">{data.title}</h1>
             <p className="text-gray-600">{data.desc}</p>
-            <button
-              onClick={() => deleteTodo(i)}
-              className="text-red-600 hover:text-red-800 transition-all mt-2"
-            >
-              <MdDelete className="w-5 h-5" />
-            </button>
+            {data.dueDate && <p className="text-sm text-gray-500">Due: {data.dueDate}</p>}
+            <div className="flex gap-2 mt-2">
+              <button
+                onClick={() => editTodo(i)}
+                className="text-blue-600 hover:text-blue-800 transition-all"
+              >
+                <MdEdit className="w-5 h-5" />
+              </button>
+              <button
+                onClick={() => deleteTodo(i)}
+                className="text-red-600 hover:text-red-800 transition-all"
+              >
+                <MdDelete className="w-5 h-5" />
+              </button>
+            </div>
           </div>
         ))}
       </div>
