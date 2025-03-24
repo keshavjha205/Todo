@@ -13,7 +13,7 @@ A simple and lightweight React-based Todo App with local storage support. Users 
 - **React**: Functional components and hooks for state management.
 - **Tailwind CSS**: For styling and responsive design.
 - **Local Storage**: To store todos persistently.
-- **React Icons**: For the delete icon.
+- **React Icons**: For icons.
 
 ## Installation & Setup
 1. Clone the repository:
@@ -61,7 +61,7 @@ A simple and lightweight React-based Todo App with local storage support. Users 
 This project is open-source and available under the MIT License.
 
 ---
-**Author:** Keshav
+**Author:** Keshav Jha
 
 
 
