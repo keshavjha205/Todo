@@ -19,7 +19,7 @@ A simple and lightweight React-based Todo App with local storage support. Users 
 ## Installation & Setup
 1. Clone the repository:
    ```bash
-   git clone https://github.com/your-username/todo-app.git
+   git clone https://github.com/keshavjha205/todo.git
    cd todo-app
    ```
 
@@ -30,7 +30,7 @@ A simple and lightweight React-based Todo App with local storage support. Users 
 
 3. Start the development server:
    ```bash
-   npm start
+   npm run dev
    ```
 
 ## Usage
@@ -41,19 +41,7 @@ A simple and lightweight React-based Todo App with local storage support. Users 
 5. Set due dates and reminders for important tasks.
 6. Click on the delete icon to remove a todo.
 
-## Folder Structure
-```
-├── src
-│   ├── App.js       # Main component
-│   ├── index.js     # Entry point
-│   ├── index.css    # Styles
-│   └── components   # (Optional) Additional components
-├── public
-│   ├── index.html   # HTML template
-│   └── assets       # (Optional) Images or icons
-├── package.json
-└── README.md
-```
+
 
 ## Future Improvements
 - Implement a drag-and-drop feature for reordering todos.
